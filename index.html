@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Misi Algoritma: LKPD Interaktif</title>
+<style>
+:root{--bg:#eef2ff;--card:#fff;--ink:#12204a;--mut:#56638a;--pri:#2f5bff;--onpri:#fff;--yel:#ffc928;--cor:#ff6b57;--ok:#0d8a47;--okb:#dff7e9;--bad:#c4271c;--badb:#ffe6e2;--line:#cfd8f5;--code:#101a3a;--codeink:#e8eeff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1230;--card:#14204a;--ink:#eef2ff;--mut:#a3b0d8;--pri:#8aa6ff;--onpri:#0a1230;--ok:#4be08b;--okb:#0f3a29;--bad:#ff8a7e;--badb:#4a1d1a;--line:#2b3b72;--code:#070d22}}
+:root[data-theme="dark"]{--bg:#0a1230;--card:#14204a;--ink:#eef2ff;--mut:#a3b0d8;--pri:#8aa6ff;--onpri:#0a1230;--ok:#4be08b;--okb:#0f3a29;--bad:#ff8a7e;--badb:#4a1d1a;--line:#2b3b72;--code:#070d22}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Trebuchet MS","Segoe UI",system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:0 14px 40px}
+header{background:linear-gradient(135deg,#1b2f8f,#2f5bff);color:#fff;border-radius:0 0 26px 26px;padding:22px 18px 18px;margin:0 -14px 14px}
+header h1{margin:0;font-size:clamp(26px,6vw,40px);line-height:1.1;font-weight:900;letter-spacing:-.5px}
+header p{margin:6px 0 12px;opacity:.9}
+.hrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.hrow input{flex:1;min-width:160px;border:0;border-radius:12px;padding:10px 12px;font:inherit;color:#12204a}
+#prog{background:var(--yel);color:#12204a;font-weight:800;border-radius:999px;padding:8px 14px}
+#nav{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px}
+.tab{flex:0 0 auto;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:9px 14px;font:inherit;font-weight:800;cursor:pointer}
+.tab.on{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:18px}
+h2{margin:0 0 6px;font-size:26px;line-height:1.15}
+h3{margin:18px 0 8px;font-size:17px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.pill{border:2px solid var(--pri);background:transparent;color:var(--pri);border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer}
+.pill.on{background:var(--pri);color:var(--onpri)}
+.cardbtn{border:2px dashed var(--pri);background:var(--card);color:var(--ink);border-radius:14px;padding:10px 12px;font:inherit;cursor:pointer;text-align:left}
+.cardbtn.used{border-style:solid;background:var(--bg)}
+.slots{padding-left:24px;margin:0 0 12px;min-height:30px}
+.slots li{margin:6px 0}
+.btn{background:var(--yel);color:#12204a;border:0;border-radius:14px;padding:11px 18px;font:inherit;font-weight:900;cursor:pointer;margin-top:10px}
+.btn:focus-visible,.tab:focus-visible,.pill:focus-visible,.cardbtn:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--cor);outline-offset:2px}
+.fb{margin-top:12px;border-radius:12px;padding:0}
+.fb.ok,.fb.bad{padding:10px 14px;font-weight:700}
+.fb.ok{background:var(--okb);color:var(--ok)}
+.fb.bad{background:var(--badb);color:var(--bad)}
+pre{background:var(--code);color:var(--codeink);border-radius:14px;padding:14px;overflow-x:auto;margin:8px 0;font:15px/1.9 ui-monospace,Consolas,monospace}
+pre .ln{display:block;padding:0 6px;border-radius:6px}
+pre .sus{background:#ff6b5755;cursor:pointer}
+pre .tap{cursor:pointer}
+pre .tap:hover{background:#ffffff1f}
+pre .on{background:#ffc92866}
+select,input[type=number],input[type=text],textarea{font:inherit;border:2px solid var(--line);border-radius:10px;padding:5px 8px;background:var(--card);color:var(--ink);max-width:100%}
+textarea{width:100%;min-height:70px}
+.ipo{display:grid;grid-template-columns:90px 1fr;gap:8px;align-items:center}
+label.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line)}
+label.chk input{margin-top:5px;width:20px;height:20px;flex:0 0 auto}
+svg{max-width:100%;height:auto}
+svg text{fill:var(--ink);font:14px "Trebuchet MS",sans-serif}
+svg .s{fill:var(--card);stroke:var(--ink);stroke-width:2}
+svg .l{stroke:var(--ink);stroke-width:2;fill:none}
+.q{border:2px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}
+@media (prefers-reduced-motion:no-preference){.fb.ok{animation:pop .3s}@keyframes pop{from{transform:scale(.97)}}}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#1b2f8f;z-index:10}
+</style></head>
+<body><div class="wrap">
+<header><h1>🎮 Misi Algoritma</h1><p>LKPD interaktif Informatika kelas X · Algoritma, Flowchart, Pseudocode</p>
+<div class="hrow"><input id="nm" type="text" maxlength="100" placeholder="Nama lengkap" aria-label="Nama lengkap murid" autocomplete="name"><input id="kelas" type="text" maxlength="50" placeholder="Kelas, contoh X-1" aria-label="Kelas murid"><span id="prog"></span></div><p id="sync" style="margin:10px 0 0;font-weight:700"></p></header>
+<div id="nav" role="tablist"></div>
+<div id="main"></div>
+</div>
+<script>
+var $=function(s){return document.querySelector(s)};
+var S={name:"",className:"",done:{},ref:["","",""],assessment:{},startedAt:null,studentId:""};
+try{S=Object.assign(S,JSON.parse(localStorage.getItem("misi-algo")||"{}"))}catch(e){}
+if(!S.assessment||typeof S.assessment!=="object")S.assessment={};
+if(!/^[A-Za-z0-9-]{8,100}$/.test(S.studentId||"")){S.studentId=window.crypto&&crypto.randomUUID?crypto.randomUUID():"murid-"+Date.now()+"-"+Math.random().toString(36).slice(2);try{localStorage.setItem("misi-algo",JSON.stringify(S))}catch(e){}}
+if(!Number(S.startedAt)||Number(S.startedAt)>Date.now()){S.startedAt=Date.now();try{localStorage.setItem("misi-algo",JSON.stringify(S))}catch(e){}}
+var SCRIPT_URL="https://script.google.com/macros/s/AKfycbw_HDAB05bxIlCsbnWp9BbZJp9I1kpVVtqvplx_fKK8ftt_RiUGGBQIafNc19srudxQ2A/exec";
+var save=function(){try{localStorage.setItem("misi-algo",JSON.stringify(S))}catch(e){}push()};
+var tmr=null;
+function stars(){return Object.keys(S.done).filter(function(k){return S.done[k]}).length}
+function setSync(t){var e=$("#sync");if(e)e.textContent=t}
+function push(){if(!SCRIPT_URL){setSync("Penyimpanan online belum dikonfigurasi; hasil sementara tersimpan di perangkat ini.");return}
+if(!S.name||!S.name.trim()||!S.className||!S.className.trim()){setSync("Isi nama lengkap dan kelas agar hasil tersimpan di laman guru.");return}
+clearTimeout(tmr);tmr=setTimeout(function(){var t=Date.now(),data={id:S.studentId,name:S.name.trim(),className:S.className.trim(),done:S.done,stars:stars(),exit:S.exit==null?null:S.exit,ref:S.ref,assessment:S.assessment,startedAt:S.startedAt,durationMs:Math.max(0,t-S.startedAt),updatedAt:t};
+setSync("Mengirim hasil ke spreadsheet guru…");
+fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)}).then(function(){setSync("Pengiriman hasil sudah dilakukan. Periksa spreadsheet guru jika belum muncul.")},function(){setSync("Pengiriman gagal. Hasil tetap tersimpan di perangkat; coba lagi saat online.")})},800)}
+window.addEventListener("online",push);
+function shuf(a){return a.map(function(v){return[Math.random(),v]}).sort(function(x,y){return x[0]-y[0]}).map(function(x){return x[1]})}
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function msg(id,ok,t){var e=$("#"+id);e.className="fb "+(ok?"ok":"bad");e.innerHTML=t}
+function win(k){S.done["l"+k]=true;save();nav()}
+var cur=0,tabs=["Level 1","Level 2","Level 3","Level 4","Penutup"];
+function nav(){var tl=tabs.concat(["Rekap Guru"]);$("#nav").innerHTML=tl.map(function(t,i){return '<button class="tab '+(i==cur?"on":"")+'" onclick="go('+i+')">'+(S.done["l"+i]?"⭐ ":"")+t+'</button>'}).join("");
+$("#prog").textContent=Object.keys(S.done).filter(function(k){return S.done[k]}).length+" / 5 bintang"}
+function go(i){cur=i;render();window.scrollTo(0,0)}
+function render(){nav();[v1,v2,v3,v4,v5,v6][cur]()}
+var RW=[];
+function v6(){$("#main").innerHTML='<div class="card"><h2>Rekap Guru</h2><p>Jika integrasi online sudah dipasang, identitas, jawaban, dan asesmen murid tersimpan otomatis di Google Spreadsheet yang hanya dapat dibuka guru. Tab ini tetap bisa dipakai sebagai cara cadangan: tempel kode hasil murid, satu kode per baris.</p><textarea id="cd" placeholder="Tempel kode hasil di sini" style="min-height:140px"></textarea><button class="btn" onclick="rek()">Tampilkan rekap</button><div id="tb"></div></div>'}
+function dec1(t){t=t.replace(/-/g,"+").replace(/_/g,"/").replace(/=+$/,"");var f=t;while(f.length%4)f+="=";
+try{return JSON.parse(decodeURIComponent(escape(atob(f))))}catch(e){}
+try{var g=t.slice(0,t.length-t.length%4),r=atob(g),n=r.match(/"n":"((?:[^"\\]|\\.)*)"/),c=r.match(/"c":"((?:[^"\\]|\\.)*)"/),d=r.match(/"d":(\{[^}]*\})/),k=r.match(/"s":(\d+)/),x=r.match(/"e":(\d+|null)/),y=r.match(/"t":(\d+)/),z=r.match(/"startedAt":(\d+)/),u=r.match(/"durationMs":(\d+)/);
+if(n&&d&&k){var nm=n[1],cl=c?c[1]:"";try{nm=decodeURIComponent(escape(nm));cl=decodeURIComponent(escape(cl))}catch(e2){}return {n:nm,c:cl,d:JSON.parse(d[1]),s:Number(k[1]),e:x&&x[1]!="null"?Number(x[1]):null,t:y?Number(y[1]):0,startedAt:z?Number(z[1]):null,durationMs:u?Number(u[1]):null}}}catch(e3){}
+return null}
+function dec(l){var m=(l.match(/[A-Za-z0-9+\/_-]{16,}={0,2}/g)||[]).sort(function(a,b){return b.length-a.length}),c=m.slice(0,1).concat([l.replace(/\s+/g,"")]);
+for(var i=0;i<c.length;i++){var o=dec1(c[i]);if(o&&o.n)return o}return null}
+function rek(){var ls=$("#cd").value.split(/\n+/).filter(function(x){return x.trim()}),m={},bad=[];
+ls.forEach(function(l){var o=dec(l);if(o&&o.n){var k=(String(o.c||"").trim()+"|"+String(o.n).trim()).toLowerCase();if(!m[k]||m[k].t<o.t)m[k]=o}else bad.push(l.trim().slice(0,24))});
+RW=Object.keys(m).map(function(k){return m[k]}).sort(function(a,b){return String(a.n).localeCompare(String(b.n))});
+var ck=function(d,k){return d&&d[k]?"✔":"–"};
+$("#tb").innerHTML=(bad.length?'<p class="fb bad">'+bad.length+' baris tidak terbaca: '+bad.map(esc).join(' | ')+'… Pastikan satu kode per baris dan disalin utuh.</p>':'')+(RW.length?'<p>'+RW.length+' murid tercatat.</p><div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%"><tr>'+["Nama lengkap","Kelas","Bintang","Exit (0-3)","Asesmen (/5)","Jawaban pseudocode","Mulai","Durasi pengerjaan","Terakhir"].map(function(h){return '<th style="text-align:left;padding:6px;border-bottom:2px solid var(--line)">'+h+'</th>'}).join("")+'</tr>'+RW.map(function(x){var d=x.d||{},a=x.a||{};return '<tr>'+[esc(x.n),esc(x.c||"–"),x.s+" / 5",x.e==null?"–":x.e,aScore(a)+" / 5",esc(a.pseudocode||"–"),x.startedAt?new Date(x.startedAt).toLocaleString("id-ID"):"–",durasi(x.durationMs!=null?x.durationMs:(x.startedAt&&x.t?x.t-x.startedAt:null)),new Date(x.t).toLocaleString("id-ID")].map(function(c){return '<td style="padding:6px;border-bottom:1px solid var(--line);vertical-align:top">'+c+'</td>'}).join("")+'</tr>'}).join("")+'</table></div><button class="btn" onclick="csv()">Unduh CSV</button>':(bad.length?'':'<p><em>Belum ada kode.</em></p>'))}
+function csv(){var q=function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'};
+var l=[["Nama lengkap","Kelas","Bintang","Exit","Skor asesmen otomatis (/5)","Jawaban pseudocode","Durasi (detik)","Mulai","Terakhir"].map(q).join(",")];
+RW.forEach(function(x){var a=x.a||{},duration=x.durationMs!=null?x.durationMs:(x.startedAt&&x.t?x.t-x.startedAt:null);l.push([x.n,x.c||"",x.s,x.e==null?"":x.e,aScore(a),a.pseudocode||"",duration==null?"":Math.floor(duration/1000),x.startedAt?new Date(x.startedAt).toISOString():"",new Date(x.t).toISOString()].map(q).join(","))});
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+l.join("\n")],{type:"text/csv"}));a.download="hasil-misi-algoritma.csv";a.click()}
+function durasi(ms){if(ms==null||!isFinite(Number(ms))||Number(ms)<0)return "–";var s=Math.floor(Number(ms)/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),d=s%60;return [h?h+" jam":"",m?m+" mnt":"",d||(!h&&!m)?d+" dtk":""].filter(Boolean).join(" ")}
+function kode(){var t=Date.now(),o={n:(S.name||"").trim(),c:(S.className||"").trim(),d:S.done,s:stars(),e:S.exit==null?null:S.exit,a:S.assessment,startedAt:S.startedAt,durationMs:Math.max(0,t-S.startedAt),t:t};try{return btoa(unescape(encodeURIComponent(JSON.stringify(o))))}catch(e){return ""}}
+function aScore(a){return (a.trace74=="Belum Tuntas"?1:0)+(a.trace75=="Tuntas"?1:0)+(a.symbolInput=="Jajar genjang"?1:0)+(a.symbolDecision=="Belah ketupat"?1:0)+(a.bugCondition=="jumlah >= 4"?1:0)}
+function sel(id,opts,selected,onchange){return '<select id="'+id+'"'+(onchange?' onchange="'+onchange+'"':'')+'><option value="">pilih…</option>'+opts.map(function(o){return '<option'+(String(o)===String(selected)?' selected':'')+'>'+esc(o)+'</option>'}).join("")+'</select>'}
+
+/* LEVEL 1 */
+var SC=[{n:"Wahana",c:["MULAI","Tanyakan tinggi badan pengunjung","Apakah tinggi ≥ 120 cm?","YA: “Silakan naik wahana”","TIDAK: “Maaf, belum boleh naik”","SELESAI"],q:"Tinggi pengunjung tepat 120 cm. Kartu mana yang dijalankan robot?",a:3},
+{n:"Kelulusan",c:["MULAI","Masukkan nilai murid","Apakah nilai ≥ 75?","YA: tampilkan “Tuntas”","TIDAK: tampilkan “Belum Tuntas”","SELESAI"],q:"Nilai murid tepat 75. Kartu mana yang dijalankan robot?",a:3},
+{n:"Perpustakaan",c:["MULAI","Catat jumlah buku yang sedang dipinjam","Apakah jumlah buku < 3?","YA: “Boleh meminjam”","TIDAK: “Kembalikan satu buku dahulu”","SELESAI"],q:"Murid sedang meminjam tepat 3 buku. Kartu mana yang dijalankan robot?",a:4}];
+var L1={s:0,slots:[],pool:[]};
+function l1init(){L1.slots=[];L1.pool=shuf([0,1,2,3,4,5])}
+l1init();
+function l1add(i){L1.pool=L1.pool.filter(function(x){return x!=i});L1.slots.push(i);v1()}
+function l1del(k){L1.pool.push(L1.slots.splice(k,1)[0]);v1()}
+function v1(){var s=SC[L1.s];
+$("#main").innerHTML='<div class="card"><h2>Level 1: Algorithm Challenge</h2><p>Susun kartu acak menjadi algoritma yang benar. Ketuk kartu untuk memasukkannya ke urutan, ketuk lagi untuk melepas. Yang dinilai logikanya, bukan kecepatanmu.</p>'+
+'<div class="row">'+SC.map(function(x,i){return '<button class="pill '+(i==L1.s?"on":"")+'" onclick="L1.s='+i+';l1init();v1()">'+x.n+'</button>'}).join("")+'</div>'+
+'<h3>Kartu acak</h3><div class="row">'+(L1.pool.map(function(i){return '<button class="cardbtn" onclick="l1add('+i+')">'+s.c[i]+'</button>'}).join("")||"<em>Semua kartu sudah dipakai.</em>")+'</div>'+
+'<h3>Urutan algoritmamu</h3><ol class="slots">'+L1.slots.map(function(i,k){return '<li><button class="cardbtn used" onclick="l1del('+k+')">'+s.c[i]+'</button></li>'}).join("")+'</ol>'+
+'<button class="btn" onclick="l1chk()">Periksa urutan</button><div id="f1" class="fb"></div><div id="r1"></div></div>'}
+function l1chk(){var sl=L1.slots,s=SC[L1.s];
+if(sl.length<6){msg("f1",false,"Masukkan semua 6 kartu dulu.");return}
+var ok=sl[0]==0&&sl[1]==1&&sl[2]==2&&sl[5]==5&&(sl[3]==3||sl[3]==4)&&(sl[4]==3||sl[4]==4);
+if(!ok){msg("f1",false,"Belum tepat. Robot harus tahu kapan mulai, data apa yang diminta, lalu diperiksa kondisinya, baru dua jalur YA dan TIDAK, dan terakhir selesai.");$("#r1").innerHTML="";return}
+msg("f1",true,"Urutan sudah logis! Sekarang uji robotmu.");
+$("#r1").innerHTML='<h3>Uji robot dengan data batas</h3><p>'+s.q+'</p><div class="row"><button class="cardbtn" onclick="l1ans(3)">'+s.c[3]+'</button><button class="cardbtn" onclick="l1ans(4)">'+s.c[4]+'</button></div>'}
+function l1ans(i){var s=SC[L1.s];if(i==s.a){msg("f1",true,"Tepat! Data batas selalu perlu diuji karena di situlah kesalahan sering bersembunyi. ⭐");win(0)}else msg("f1",false,"Cermati tanda pada kartu keputusan (≥ atau <). Apakah data batas ikut dihitung?")}
+
+/* LEVEL 2 */
+var ST=[["Flowchart tidak memiliki simbol MULAI",1],["Flowchart tidak memiliki simbol SELESAI",1],["Input dan output memakai persegi panjang, seharusnya jajar genjang",1],["Cabang keputusan tidak diberi label YA dan TIDAK",1],["Kondisi nilai > 75 salah, seharusnya nilai ≥ 75",1],["Belah ketupat tidak boleh dipakai untuk keputusan",0],["Seharusnya ada dua kotak INPUT",0],["Kata “Tuntas” salah ejaan",0]];
+function v2(){
+$("#main").innerHTML='<div class="card"><h2>Level 2: Flowchart Detective 🔍</h2><p>Flowchart penentu ketuntasan nilai ini mengandung 5 kesalahan. Amati gambar, lalu centang semua pernyataan yang benar.</p>'+
+'<svg viewBox="0 0 340 290" role="img" aria-label="Flowchart yang salah: kotak INPUT nilai, keputusan nilai lebih besar dari 75, dua kotak hasil"><rect class="s" x="95" y="8" width="150" height="38"/><text x="170" y="32" text-anchor="middle">INPUT nilai</text><path class="l" d="M170 46V78"/>'+
+'<path class="s" d="M170 78L255 128L170 178L85 128Z"/><text x="170" y="133" text-anchor="middle">nilai &gt; 75 ?</text><path class="l" d="M85 128H50V222"/><path class="l" d="M255 128H290V222"/>'+
+'<rect class="s" x="5" y="222" width="90" height="40"/><text x="50" y="246" text-anchor="middle">Tuntas</text><rect class="s" x="215" y="222" width="115" height="40"/><text x="272" y="246" text-anchor="middle">Belum Tuntas</text></svg>'+
+ST.map(function(x,i){return '<label class="chk"><input type="checkbox" id="c2_'+i+'"><span>'+x[0]+'</span></label>'}).join("")+
+'<button class="btn" onclick="l2chk()">Periksa temuan</button><div id="f2" class="fb"></div><div id="r2"></div></div>'}
+function l2chk(){var good=0;ST.forEach(function(x,i){if($("#c2_"+i).checked==!!x[1])good++});
+if(good<8){msg("f2",false,good+" dari 8 pernyataan sudah tepat. Periksa lagi: ada yang kelewat, atau ada yang sebenarnya bukan kesalahan.");$("#r2").innerHTML="";return}
+msg("f2",true,"Kelima kesalahan ditemukan! Satu pertanyaan terakhir.");
+$("#r2").innerHTML='<h3>Prediksi</h3><p>Dengan flowchart yang salah ini, apa hasil untuk nilai 75?</p><div class="row"><button class="cardbtn" onclick="l2ans(0)">Tuntas</button><button class="cardbtn" onclick="l2ans(1)">Belum Tuntas</button></div>'}
+function l2ans(i){if(i==1){msg("f2",true,"Benar. 75 > 75 itu salah, jadi murid bernilai tepat 75 dianggap belum tuntas. Itu kesalahan logika pada data batas. ⭐");win(1)}else msg("f2",false,"Telusuri: apakah 75 lebih besar dari 75?")}
+
+/* LEVEL 3 */
+var M={a:0,b:0,c:0},O=["Jumlah tiket yang dibeli","Menghitung total, lalu diskon 10% jika jumlah ≥ 4","Jumlah yang harus dibayar"];
+function v3(){
+$("#main").innerHTML='<div class="card"><h2>Level 3: Misi Kasir Tiket Pensi 🎟️</h2><p>Harga tiket Rp30.000. Beli 4 tiket atau lebih, diskon 10%. Rancang otak robot kasir!</p>'+
+'<h3>A. Input, proses, output</h3><div class="ipo"><b>Input</b>'+sel("i0",O)+'<b>Proses</b>'+sel("i1",O)+'<b>Output</b>'+sel("i2",O)+'</div><button class="btn" onclick="l3a()">Periksa A</button><div id="fa" class="fb"></div>'+
+'<h3>B. Lengkapi pseudocode</h3><pre><span class="ln">START</span><span class="ln">INPUT jumlah</span><span class="ln">total = jumlah * '+sel("p0",["30000","jumlah","10%"])+'</span><span class="ln">IF jumlah '+sel("p1",[">",">=","<"])+' 4 THEN</span><span class="ln">    bayar = total * '+sel("p2",["0.1","0.9","1.1"])+'</span><span class="ln">ELSE</span><span class="ln">    bayar = '+sel("p3",["total","0","jumlah"])+'</span><span class="ln">ENDIF</span><span class="ln">OUTPUT '+sel("p4",["bayar","total","jumlah"])+'</span><span class="ln">END</span></pre><button class="btn" onclick="l3b()">Periksa B</button><div id="fb" class="fb"></div>'+
+'<h3>C. Jalankan robot</h3><p>Coba berbagai jumlah tiket dan lihat langkah robot.</p><div class="row"><input id="n" type="number" min="0" value="4" aria-label="Jumlah tiket"><button class="pill on" onclick="l3run()">Jalankan</button></div><pre id="sim">Tekan Jalankan.</pre>'+
+'<h3>D. Uji dengan data uji</h3><p>Hitung sendiri, lalu isi hasil yang harus dibayar (angka saja, dalam rupiah).</p><div class="ipo" style="grid-template-columns:120px 1fr"><b>3 tiket</b><input id="t3" type="number"><b>4 tiket</b><input id="t4" type="number"><b>5 tiket</b><input id="t5" type="number"></div><button class="btn" onclick="l3c()">Periksa D</button><div id="fc" class="fb"></div>'+
+'<h3>Tantangan: kartu pelajar</h3><p>Jika membeli ≥ 4 tiket dan membawa kartu pelajar, diskon menjadi 20%. Berapa bayar untuk 4 tiket dengan kartu pelajar?</p><input id="tk" type="number"> <button class="pill on" onclick="l3t()">Cek</button><div id="ft" class="fb"></div></div>'}
+function l3a(){var ok=[0,1,2].every(function(i){return $("#i"+i).value==O[i]});M.a=ok?1:0;msg("fa",ok,ok?"Tepat! Input, proses, dan output sudah benar.":"Belum tepat. Input adalah data masuk, proses adalah pengolahan, output adalah hasil.");c3()}
+function l3b(){var k=["30000",">=","0.9","total","bayar"],ok=k.every(function(v,i){return $("#p"+i).value==v});M.b=ok?1:0;msg("fb",ok,ok?"Pseudocode benar! Bayar = 90% dari total jika jumlah ≥ 4.":"Ada bagian yang belum tepat. Ingat diskon 10% berarti murid membayar 90% dari total, dan data batas 4 ikut mendapat diskon.");c3()}
+function calc(n){var t=n*30000;return n>=4?t*0.9:t}
+function l3run(){var n=Number($("#n").value),t=n*30000,y=n>=4;$("#sim").innerHTML='<span class="ln">INPUT jumlah → '+n+'</span><span class="ln on">total = '+n+' * 30000 → '+t+'</span><span class="ln">IF '+n+' &gt;= 4 → '+(y?"YA":"TIDAK")+'</span><span class="ln on">bayar = '+(y?t+" * 0.9":t)+' → '+calc(n)+'</span><span class="ln">OUTPUT bayar → Rp'+calc(n).toLocaleString("id-ID")+'</span>'}
+function num(id){return Number(String($("#"+id).value).replace(/\D/g,""))}
+function l3c(){var ok=num("t3")==90000&&num("t4")==108000&&num("t5")==135000;M.c=ok?1:0;msg("fc",ok,ok?"Semua hasil cocok dengan robot! Data batas 4 tiket sudah kamu uji.":"Ada hasil yang belum cocok. Gunakan bagian C untuk memeriksa, lalu bandingkan dengan hitunganmu.");c3()}
+function l3t(){var ok=num("tk")==96000;msg("ft",ok,ok?"Benar: 4 × 30000 = 120000, dikurangi 20%, jadi Rp96.000. Kamu siap untuk percabangan bertingkat!":"Belum tepat. Hitung total dulu, lalu bayar 80% dari total.")}
+function c3(){if(M.a&&M.b&&M.c)win(2)}
+
+/* LEVEL 4 */
+var BL=["START","INPUT jumlah","total = jumlah + 30000","IF jumlah > 4 THEN","    bayar = total * 10%","ELSE","    bayar = total","ENDIF","OUTPUT total","END"],BUG=[2,3,4,8];
+var FX={2:["total = jumlah * 30000","total = jumlah - 30000","total = jumlah / 30000"],3:["IF jumlah >= 4 THEN","IF jumlah < 4 THEN","IF jumlah = 4 THEN"],4:["bayar = total * 0.9","bayar = total * 10","bayar = total + 0.9"],8:["OUTPUT bayar","OUTPUT jumlah","OUTPUT 30000"]};
+var FS={};BUG.forEach(function(b){FS[b]=shuf(FX[b])});
+var M4={sus:[],found:false};
+function v4(){
+$("#main").innerHTML='<div class="card"><h2>Level 4: Debugging Battle 🐞</h2><p>Seorang kasir pemula menulis pseudocode ini. Untuk 5 tiket, hasil yang benar Rp135.000, tetapi robot menampilkan angka yang aneh. Ketuk baris yang menurutmu salah (ada 4 bug).</p>'+
+'<pre>'+BL.map(function(t,i){var f=M4.found&&BUG.indexOf(i)>-1;return '<span class="ln tap '+(M4.sus.indexOf(i)>-1?"sus":"")+'" onclick="'+(M4.found?"":"l4tog("+i+")")+'">'+esc(t)+'</span>'}).join("")+'</pre>'+
+(M4.found?'<h3>Pilih perbaikan untuk tiap bug</h3>'+BUG.map(function(b){return '<div class="q"><code>'+esc(BL[b])+'</code><br>'+sel("x"+b,FS[b])+'</div>'}).join("")+'<button class="btn" onclick="l4fix()">Periksa perbaikan</button>':'<button class="btn" onclick="l4find()">Periksa tersangka</button>')+'<div id="f4" class="fb"></div></div>'}
+function l4tog(i){var k=M4.sus.indexOf(i);if(k>-1)M4.sus.splice(k,1);else M4.sus.push(i);v4()}
+function l4find(){var hit=M4.sus.filter(function(i){return BUG.indexOf(i)>-1}).length,ext=M4.sus.length-hit;
+if(hit==4&&ext==0){M4.found=true;v4();msg("f4",true,"Keempat bug ditemukan! Sekarang pilih perbaikan yang tepat.")}
+else msg("f4",false,hit+" dari 4 bug sudah kamu tandai"+(ext?", dan "+ext+" baris yang kamu tandai sebenarnya benar":"")+". Telusuri dengan 5 tiket: hitung total, cek kondisi, lalu lihat apa yang ditampilkan.")}
+function l4fix(){var ok=BUG.every(function(b){return $("#x"+b).value==FX[b][0]});
+if(ok){msg("f4",true,"Semua bug sudah diperbaiki! Debugger andal. ⭐");win(3)}else msg("f4",false,"Masih ada perbaikan yang belum tepat. Uji ulang di kepalamu dengan 5 tiket dan 4 tiket.")}
+
+/* PENUTUP */
+function v5(){
+$("#main").innerHTML='<div class="card"><h2>Penutup: Refleksi, Exit Ticket, dan Asesmen</h2><h3>Refleksi</h3>'+
+["Apa yang paling menantang ketika membuat flowchart?","Mengapa urutan instruksi harus logis?","Bagaimana flowchart membantu kita menulis pseudocode?"].map(function(q,i){return '<p style="margin:10px 0 4px">'+q+'</p><textarea oninput="S.ref['+i+']=this.value;save()" aria-label="'+q+'">'+esc(S.ref[i]||"")+'</textarea>'}).join("")+
+'<h3>Exit Ticket</h3><div class="q"><b>1.</b> Belah ketupat pada flowchart berfungsi sebagai…<br><label><input type="radio" name="e1" value="0"> Proses atau perhitungan</label><br><label><input type="radio" name="e1" value="1"> Keputusan dengan dua jalur YA dan TIDAK</label><br><label><input type="radio" name="e1" value="2"> Awal dan akhir algoritma</label></div>'+
+'<div class="q"><b>2.</b> Manakah pseudocode yang benar: jika kehadiran ≥ 80 tampilkan “Boleh”, jika tidak “Tidak boleh”?<br><label><input type="radio" name="e2" value="0"> IF kehadiran &lt; 80 THEN OUTPUT “Boleh” ELSE OUTPUT “Tidak boleh” ENDIF</label><br><label><input type="radio" name="e2" value="1"> IF kehadiran &gt;= 80 THEN OUTPUT “Boleh” ELSE OUTPUT “Tidak boleh” ENDIF</label><br><label><input type="radio" name="e2" value="2"> IF kehadiran &gt;= 80 THEN OUTPUT “Boleh” ENDIF</label></div>'+
+'<div class="q"><b>3.</b> Telusuri: jika saldo ≥ 20000 tampilkan “Cukup”, jika tidak “Kurang”.<br>saldo 20000 → '+sel("e3a",["Cukup","Kurang"])+'<br>saldo 15000 → '+sel("e3b",["Cukup","Kurang"])+'</div>'+
+'<h3>Asesmen Pemahaman</h3><p>Bagian ini menguji penelusuran, simbol flowchart, debugging, dan kemampuan merancang pseudocode. Pilihan otomatis bernilai 5 poin; pseudocode dinilai guru dengan rubrik 4 poin.</p>'+
+'<div class="q"><b>4. Uji data batas.</b> Jika pseudocode memeriksa <code>nilai &gt;= 75</code>, tentukan hasilnya.<br>Nilai 74 → '+sel("a74",["Tuntas","Belum Tuntas"],S.assessment.trace74,"saveAssessment(\'trace74\',this.value)")+'<br>Nilai 75 → '+sel("a75",["Tuntas","Belum Tuntas"],S.assessment.trace75,"saveAssessment(\'trace75\',this.value)")+'</div>'+
+'<div class="q"><b>5. Pasangkan fungsi simbol.</b><br>INPUT nama → '+sel("asIn",["Belah ketupat","Jajar genjang","Persegi panjang"],S.assessment.symbolInput,"saveAssessment(\'symbolInput\',this.value)")+'<br>Keputusan “nilai ≥ 75?” → '+sel("asDecision",["Belah ketupat","Jajar genjang","Persegi panjang"],S.assessment.symbolDecision,"saveAssessment(\'symbolDecision\',this.value)")+'</div>'+
+'<div class="q"><b>6. Temukan bug.</b> Pada aturan diskon tiket “diskon jika jumlah tiket 4 atau lebih”, apa perbaikan kondisi yang tepat?<br>'+sel("asBug",["jumlah > 4","jumlah >= 4","jumlah = 4"],S.assessment.bugCondition,"saveAssessment(\'bugCondition\',this.value)")+'</div>'+
+'<p id="assessScore"><b>Skor otomatis: '+aScore(S.assessment)+' / 5</b></p>'+
+'<div class="q"><b>7. Rancang pseudocode (dinilai guru, 0–4).</b> Harga satu buku Rp20.000. Jika membeli 3 buku atau lebih, diskon 15%; selain itu bayar harga normal. Tulis pseudocode dari INPUT sampai OUTPUT.<textarea oninput="saveAssessment(\'pseudocode\',this.value)" aria-label="Pseudocode diskon buku">'+esc(S.assessment.pseudocode||"")+'</textarea><small>Rubrik: 1 poin input dan total; 1 poin kondisi ≥ 3; 1 poin kedua jalur pembayaran (diskon 15% = bayar 85%); 1 poin output pembayaran.</small></div>'+
+'<button class="btn" onclick="l5()">Periksa exit ticket</button><div id="f5" class="fb"></div>'+
+'<h3>Hasil misimu</h3><div id="sum"></div><button class="pill on" onclick="cp()">Salin kode hasil (cadangan)</button><span id="cpm"></span></div>';sumr()}
+function saveAssessment(key,value){S.assessment[key]=value;save();var e=$("#assessScore");if(e)e.innerHTML="<b>Skor otomatis: "+aScore(S.assessment)+" / 5</b>";if($("#sum"))sumr()}
+function l5(){var r1=document.querySelector("input[name=e1]:checked"),r2=document.querySelector("input[name=e2]:checked");
+var s=(r1&&r1.value=="1"?1:0)+(r2&&r2.value=="1"?1:0)+($("#e3a").value=="Cukup"&&$("#e3b").value=="Kurang"?1:0);
+S.exit=s;save();if(s==3){msg("f5",true,"3 dari 3 benar. Kamu menguasai materi ini! ⭐");win(4)}
+else if(s==2)msg("f5",false,"2 dari 3 benar. Cukup baik, perkuat bagian yang masih keliru lalu coba lagi.");
+else msg("f5",false,s+" dari 3 benar. Ulangi Level 2 dan 3, lalu coba exit ticket lagi.");sumr()}
+function stat(){var n=Object.keys(S.done).filter(function(k){return S.done[k]}).length;return (S.name||"Murid")+" ("+(S.className||"kelas belum diisi")+") menyelesaikan "+n+" dari 5 bintang: "+tabs.map(function(t,i){return t+" "+(S.done["l"+i]?"✔":"belum")}).join(", ")+"."}
+function sumr(){var nm=(S.name||"").trim(),cl=(S.className||"").trim();$("#sum").innerHTML=nm&&cl?'<p>'+esc(stat())+'</p><p>Skor asesmen otomatis: <b>'+aScore(S.assessment)+' / 5</b>. Jawaban pseudocode akan dinilai guru (0–4) menggunakan rubrik di atas.</p><p><b>Hasil dikirim otomatis</b> jika LKPD sudah terhubung ke layanan online. Kode berikut bisa disalin sebagai cadangan jika pengiriman online belum tersedia.</p><textarea readonly rows="4" onclick="this.select()">'+kode()+'</textarea>':'<p class="fb bad">Isi nama lengkap dan kelas di bagian paling atas agar hasil dapat disimpan.</p>'}
+function cp(){try{navigator.clipboard.writeText(kode()).then(function(){$("#cpm").textContent=" Tersalin."},function(){$("#cpm").textContent=" Gagal menyalin; foto layar saja."})}catch(e){$("#cpm").textContent=" Gagal menyalin; foto layar saja."}}
+
+$("#nm").value=S.name||"";$("#nm").addEventListener("input",function(){S.name=this.value;save();if($("#sum"))sumr()});
+$("#kelas").value=S.className||"";$("#kelas").addEventListener("input",function(){S.className=this.value;save();if($("#sum"))sumr()});
+render();
+push();
+</script></body></html>
